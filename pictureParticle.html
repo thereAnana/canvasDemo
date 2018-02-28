@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+    <canvas id="myCanvas" width="600" height="400" style="background:#000">your web browser does not support canvas</canvas>
+    </body>
+    <script type="text/javascript">
+        let canvas  = document.getElementById("myCanvas");
+        let ctx = canvas.getContext("2d");
+        let image = new Image();
+        image.src = "https://images2015.cnblogs.com/blog/1005451/201702/1005451-20170208090726166-536073124.png";
+        let pixels = [];
+        let imageData;
+        image.onload = function(){
+            getPixels();
+            drawPic();
+        };
+        function getPixels(){
+            let pos = 0;
+            for(let i =1;i<=400;i++){
+                for(let j =1;j<= 200;j++){
+                    let pixel = {
+                        x: i + Math.random() * 200,
+                        y: j + Math.random() * 200,
+                        fillStyle:'#10c9b6'
+                    }
+                    pixels.push(pixel);
+                }
+            }
+        }
+        function drawPic(){
+            console.log(pixels.length);
+            let canvas = document.getElementById("myCanvas");
+            let ctx = canvas.getContext("2d");
+            ctx.clearRect(0,0,600,400);
+            let len = pixels.length,curr_pixel = null;
+            for(let i = 0; i<len; i++){
+                curr_pixel = pixels[i];
+                ctx.fillStyle = curr_pixel.fillStyle;
+                ctx.fillRect(curr_pixel.x,curr_pixel.y,1,1);
+            }
+        }
+
+    </script>
+</html>
