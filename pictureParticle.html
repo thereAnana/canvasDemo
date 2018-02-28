@@ -9,10 +9,14 @@
     <canvas id="myCanvas" width="600" height="400" style="background:#000">your web browser does not support canvas</canvas>
     </body>
     <script type="text/javascript">
-        let canvas  = document.getElementById("myCanvas");
+        let screenWidth =  document.documentElement.clientWidth;
+        let screenHeight = document.documentElement.clientHeight;
+        let canvas = document.getElementById("myCanvas");
+        canvas.width = screenWidth;
+        canvas.height = screenHeight;
         let ctx = canvas.getContext("2d");
         let image = new Image();
-        image.src = "https://images2015.cnblogs.com/blog/1005451/201702/1005451-20170208090726166-536073124.png";
+        image.src = "star.png";
         let pixels = [];
         let imageData;
         image.onload = function(){
@@ -20,12 +24,13 @@
             drawPic();
         };
         function getPixels(){
+            console.log(screenHeight+"aaa")
             let pos = 0;
-            for(let i =1;i<=400;i++){
-                for(let j =1;j<= 200;j++){
+            for(let i =1;i<=screenWidth/2;i++){
+                for(let j =1;j<=screenHeight/2;j++){
                     let pixel = {
-                        x: i + Math.random() * 200,
-                        y: j + Math.random() * 200,
+                        x: i + Math.random() * screenWidth/2,
+                        y: j + Math.random() * screenHeight/2,
                         fillStyle:'#10c9b6'
                     }
                     pixels.push(pixel);
@@ -33,7 +38,7 @@
             }
         }
         function drawPic(){
-            console.log(pixels.length);
+            console.log(pixels);
             let canvas = document.getElementById("myCanvas");
             let ctx = canvas.getContext("2d");
             ctx.clearRect(0,0,600,400);
@@ -46,4 +51,10 @@
         }
 
     </script>
+    <style> 
+    *{
+        padding: 0;
+        margin: 0;
+    }
+    </style>
 </html>
