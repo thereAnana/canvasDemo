@@ -19,10 +19,8 @@
         image.src = "star.png";
         let pixels = [];
         let imageData;
-        image.onload = function(){
-            getPixels();
-            drawPic();
-        };
+        getPixels();
+        drawPic();
         function getPixels(){
             console.log(screenHeight+"aaa")
             let pos = 0;
