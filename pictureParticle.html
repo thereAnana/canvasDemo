@@ -21,8 +21,11 @@
         let imageData;
         getPixels();
         drawPic();
+        setInterval(function(){
+            run();
+        }, 50);
         function getPixels(){
-            console.log(screenHeight+"aaa")
+            //console.log(screenHeight+"aaa")
             let pos = 0;
             for(let i =1;i<=screenWidth/2;i++){
                 for(let j =1;j<=screenHeight/2;j++){
@@ -35,11 +38,17 @@
                 }
             }
         }
+        function run(){
+            for(let i =0;i<pixels.length;i++){
+                pixels[i].y += Math.random()*100 -50;
+            }
+            drawPic();
+        }
         function drawPic(){
             console.log(pixels);
             let canvas = document.getElementById("myCanvas");
             let ctx = canvas.getContext("2d");
-            ctx.clearRect(0,0,600,400);
+            ctx.clearRect(0,0,screenWidth,screenHeight);
             let len = pixels.length,curr_pixel = null;
             for(let i = 0; i<len; i++){
                 curr_pixel = pixels[i];
