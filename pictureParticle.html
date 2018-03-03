@@ -15,37 +15,35 @@
         canvas.width = screenWidth;
         canvas.height = screenHeight;
         let ctx = canvas.getContext("2d");
-        let image = new Image();
-        image.src = "star.png";
-        let pixels = [];
-        let imageData;
-        getPixels();
+        let pixels =[];
+        //getPixels();
         drawPic();
-        let time  = 40;
-        setInterval(function(){
-            run();
-        }, 50);
+        //let time  = 40;
+        //setInterval(function(){
+        //     run();
+        // }, 50);
         function getPixels(){
             //console.log(screenHeight+"aaa")
             let pos = 0;
             let restWidth = (screenWidth-screenHeight)/2;
-            for(let i =restWidth;i <= screenWidth - restWidth;i++){
-                let pixelDown = {
-                    x : i,
-                    y : Math.sqrt( Math.pow(screenWidth/2 - restWidth,2)- Math.pow(screenWidth/2 - i,2) ) +screenHeight/2,
-                    fillStyle : '#10c9b6'
-                }
-                pixels.push(pixelDown);
-                //pixel.y = screenHeight-pixel.y;//浅拷贝有问题。【学习】
-                //pixels.push(pixel);
-                let pixelUp = {
-                    x : i,
-                    y : screenHeight/2 -  Math.sqrt( Math.pow(screenWidth/2 - restWidth,2)- Math.pow(screenWidth/2 - i,2) ),
-                    fillStyle : '#10c9b6'
-                }
-                pixels.push(pixelUp);
-
-            }
+            //画了一个没有闭合的圆
+            // for(let i =restWidth;i <= screenWidth - restWidth;i++){
+            //     let pixelDown = {
+            //         x : i,
+            //         y : Math.sqrt( Math.pow(screenWidth/2 - restWidth,2)- Math.pow(screenWidth/2 - i,2) ) +screenHeight/2,
+            //         fillStyle : '#10c9b6'
+            //     }
+            //     pixels.push(pixelDown);
+            //     //pixel.y = screenHeight-pixel.y;//浅拷贝有问题。【学习】
+            //     //pixels.push(pixel);
+            //     let pixelUp = {
+            //         x : i,
+            //         y : screenHeight/2 -  Math.sqrt( Math.pow(screenWidth/2 - restWidth,2)- Math.pow(screenWidth/2 - i,2) ),
+            //         fillStyle : '#10c9b6'
+            //     }
+            //     pixels.push(pixelUp);
+            //
+            //}
         }
         function run(){
             if(time < 0){
@@ -64,12 +62,19 @@
             let canvas = document.getElementById("myCanvas");
             let ctx = canvas.getContext("2d");
             ctx.clearRect(0,0,screenWidth,screenHeight);
-            let len = pixels.length,curr_pixel = null;
-            for(let i = 0; i<len; i++){
-                curr_pixel = pixels[i];
-                ctx.fillStyle = curr_pixel.fillStyle;
-                ctx.fillRect(curr_pixel.x,curr_pixel.y,1,1);
-            }
+            // let len = pixels.length,curr_pixel = null;
+            // for(let i = 0; i<len; i++){
+            //     curr_pixel = pixels[i];
+            //     ctx.fillStyle = curr_pixel.fillStyle;
+            //     ctx.fillRect(curr_pixel.x,curr_pixel.y,1,1);
+            // }
+            //画一个完整的圆
+            ctx.beginPath();
+            ctx.arc(screenWidth/2,screenHeight/2,screenHeight/2,0,2*Math.PI);
+            ctx.strokeStyle='#10c9b6';
+            ctx.stroke();
+            ctx.closePath();
+
         }
 
     </script>
