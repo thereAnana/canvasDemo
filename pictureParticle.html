@@ -21,6 +21,7 @@
         let imageData;
         getPixels();
         drawPic();
+        let time  = 40;
         setInterval(function(){
             run();
         }, 50);
@@ -47,10 +48,16 @@
             }
         }
         function run(){
-            for(let i =0;i<pixels.length;i++){
-                pixels[i].y += Math.random()*100 -50;
+            if(time < 0){
+                for(let i =0;i<pixels.length;i++){
+                    pixels[i].y += Math.random()*100 -50;
+                }
+                drawPic();
+
+            }else{
+                time--;
             }
-            drawPic();
+
         }
         function drawPic(){
             console.log(pixels);
