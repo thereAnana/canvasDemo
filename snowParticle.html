@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+    <canvas id="myCanvas" width="600" height="400" style="background:#000">your web browser does not support canvas</canvas>
+    </body>
+    <script type="text/javascript">
+        let screenWidth =  document.documentElement.clientWidth;
+        let screenHeight = document.documentElement.clientHeight;
+        let canvas = document.getElementById("myCanvas");
+        canvas.width = screenWidth;
+        canvas.height = screenHeight;
+        let ctx = canvas.getContext("2d");
+        let image = new Image();
+        image.src = "star.png";
+        let pixels = [];
+        let imageData;
+        getPixels();
+        drawPic();
+        setInterval(function(){
+            run();
+        }, 50);
+        function getPixels(){
+            //console.log(screenHeight+"aaa")
+            let pos = 0;
+            for(let i =1;i<=screenWidth/2;i++){
+                for(let j =1;j<=screenHeight/2;j++){
+                    let pixel = {
+                        x: i + Math.random() * screenWidth/2,
+                        y: j + Math.random() * screenHeight/2,
+                        fillStyle:'#10c9b6'
+                    }
+                    pixels.push(pixel);
+                }
+            }
+        }
+        function run(){
+            for(let i =0;i<pixels.length;i++){
+                pixels[i].y += Math.random()*100 -50;
+            }
+            drawPic();
+        }
+        function drawPic(){
+            console.log(pixels);
+            let canvas = document.getElementById("myCanvas");
+            let ctx = canvas.getContext("2d");
+            ctx.clearRect(0,0,screenWidth,screenHeight);
+            let len = pixels.length,curr_pixel = null;
+            for(let i = 0; i<len; i++){
+                curr_pixel = pixels[i];
+                ctx.fillStyle = curr_pixel.fillStyle;
+                ctx.fillRect(curr_pixel.x,curr_pixel.y,1,1);
+            }
+        }
+
+    </script>
+    <style> 
+    *{
+        padding: 0;
+        margin: 0;
+    }
+    </style>
+</html>
