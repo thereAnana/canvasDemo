@@ -19,10 +19,11 @@
         let lineCount = 400;
         drawCircle();
         drawPic();
-        let time  = 40;
-        // setInterval(function(){
-        // run();
-        // }, 50);
+        let time  = 0;
+        let initialPhase = 0;
+        setInterval(function(){
+        run();
+        }, 100);
 
         function drawCircle(){
             console.log(pixels);
@@ -36,39 +37,64 @@
             //     ctx.fillStyle = curr_pixel.fillStyle;
             //     ctx.fillRect(curr_pixel.x,curr_pixel.y,1,1);
             // }
-            // 画一个完整的圆
-            // ctx.beginPath();
-            // ctx.arc(screenWidth/2,screenHeight/2,screenHeight/2,0,2*Math.PI);
-            // ctx.strokeStyle='#10c9b6';
-            // ctx.stroke();
-            // ctx.closePath();
+            //画一个完整的圆
+            ctx.beginPath();
+            ctx.arc(screenWidth/2,screenHeight/2,screenHeight/2 -200,0,2*Math.PI);
+            ctx.strokeStyle='#10c9b6';
+            ctx.closePath();
+            ctx.stroke();
             // 画一个空心放射圆;
+            // for(let i =0; i< lineCount;i++){
+            //     let begin ={
+            //         x:screenWidth/2 +Math.cos(2*Math.PI*i/400)*(screenHeight/2 - 200),
+            //         y:screenHeight/2 +Math.sin(2*Math.PI*i/400)*(screenHeight/2 - 200)
+            //     }
+            //     ctx.moveTo(begin.x,begin.y)
+            //     let finish = {
+            //         x:screenWidth/2 +Math.cos(2*Math.PI*i/400)*(screenHeight/2 - 150),
+            //         y:screenHeight/2 +Math.sin(2*Math.PI*i/400)*(screenHeight/2 - 150)
+            //     }
+            //     ctx.lineTo(finish.x,finish.y); 
+            // }
+            // ctx.strokeStyle = '#10c9b6'; 
+            // ctx.stroke();   
+        }
+        function run(){
+            initialPhase++;
+            let canvas = document.getElementById("myCanvas");
+            let cctx = canvas.getContext("2d");
+            //console.log(ctx.clearRect(0,0,screenWidth,screenHeight));
+            cctx.clearRect(0,0,screenWidth,screenHeight);
+            //画一个空心放射圆;
+            cctx.beginPath();
             for(let i =0; i< lineCount;i++){
+                let lineLength = 30*Math.cos(2*Math.PI*initialPhase/80);
                 let begin ={
                     x:screenWidth/2 +Math.cos(2*Math.PI*i/400)*(screenHeight/2 - 200),
                     y:screenHeight/2 +Math.sin(2*Math.PI*i/400)*(screenHeight/2 - 200)
                 }
-                ctx.moveTo(begin.x,begin.y)
+                cctx.moveTo(begin.x,begin.y)
                 let finish = {
-                    x:screenWidth/2 +Math.cos(2*Math.PI*i/400)*(screenHeight/2 - 100),
-                    y:screenHeight/2 +Math.sin(2*Math.PI*i/400)*(screenHeight/2 - 100)
+                    x:screenWidth/2 +Math.cos(2*Math.PI*i/400)*(screenHeight/2 - 200 +lineLength),
+                    y:screenHeight/2 +Math.sin(2*Math.PI*i/400)*(screenHeight/2 - 200 +lineLength)
                 }
                 ctx.lineTo(finish.x,finish.y); 
+                initialPhase ++;
+                initialPhase = initialPhase <160?initialPhase:initialPhase-160;
             }
-            ctx.strokeStyle = '#10c9b6'; 
-            ctx.stroke(); 
-            
-        }
-        function run(){
-            if(time < 0){
-                for(let i =0;i<pixels.length;i++){
-                    pixels[i].y += Math.random()*100 -50;
-                }
-                drawPic();
+            cctx.strokeStyle = '#10c9b6'; 
+            cctx.closePath();
+            cctx.stroke();  
+            // if(time < 0){
+            //     for(let i =0;i<pixels.length;i++){
+            //         pixels[i].y += Math.random()*100 -50;
+            //     }
+            //     drawPic();
 
-            }else{
-                time--;
-            }
+            // }else{
+            //     time--;
+            // }
+            
 
         }
         function drawPic(){
