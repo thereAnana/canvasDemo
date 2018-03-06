@@ -24,7 +24,7 @@
         let circleWidth = 30;
         setInterval(function(){
         run();
-        }, 1);
+        }, 10);
 
         function drawCircle(){
             console.log(pixels);
@@ -65,41 +65,46 @@
             let canvas = document.getElementById("myCanvas");
             let cctx = canvas.getContext("2d");
             cctx.beginPath();
-            let clearlineBegin ={
-                x:screenWidth/2 +Math.cos(2*Math.PI*time/400)*(screenHeight/2 - 200 - circleWidth),
-                y:screenHeight/2 +Math.sin(2*Math.PI*time/400)*(screenHeight/2 - 200 - circleWidth)   
-            };
-            cctx.moveTo(clearlineBegin.x,clearlineBegin.y);
-            let clearlineFinish = {
-                x:screenWidth/2 +Math.cos(2*Math.PI*time/400)*(screenHeight/2 - 200 +circleWidth),
-                y:screenHeight/2 +Math.sin(2*Math.PI*time/400)*(screenHeight/2 - 200 +circleWidth)
+            for(let i = 0;i<lineCount;i++){
+                let clearlineBegin ={
+                    x:screenWidth/2 +Math.cos(2*Math.PI*i/400)*(screenHeight/2 - 200 - circleWidth),
+                    y:screenHeight/2 +Math.sin(2*Math.PI*i/400)*(screenHeight/2 - 200 - circleWidth)   
+                };
+                cctx.moveTo(clearlineBegin.x,clearlineBegin.y);
+                let clearlineFinish = {
+                    x:screenWidth/2 +Math.cos(2*Math.PI*i/400)*(screenHeight/2 - 200 +circleWidth),
+                    y:screenHeight/2 +Math.sin(2*Math.PI*i/400)*(screenHeight/2 - 200 +circleWidth)
+                }
+                ctx.lineTo(clearlineFinish.x,clearlineFinish.y); 
             }
-            ctx.lineTo(clearlineFinish.x,clearlineFinish.y); 
             cctx.strokeStyle = '#000'; 
             cctx.closePath();
             cctx.stroke(); 
             //画一个空心放射圆;
             cctx.beginPath();
-            //for(let i =0; i< lineCount;i++){
-            let lineLength = circleWidth*Math.cos(2*Math.PI*initialPhase/250);
-            let begin ={
-                    x:screenWidth/2 +Math.cos(2*Math.PI*time/400)*(screenHeight/2 - 200),
-                    y:screenHeight/2 +Math.sin(2*Math.PI*time/400)*(screenHeight/2 - 200)
+            for(let i =0; i< lineCount;i++){
+                let lineLength = circleWidth*Math.cos(2*Math.PI*initialPhase/200);
+                let begin ={
+                        x:screenWidth/2 +Math.cos(2*Math.PI*i/400)*(screenHeight/2 - 200),
+                        y:screenHeight/2 +Math.sin(2*Math.PI*i/400)*(screenHeight/2 - 200)
+                    }
+                cctx.moveTo(begin.x,begin.y)
+                let finish = {
+                    x:screenWidth/2 +Math.cos(2*Math.PI*i/400)*(screenHeight/2 - 200 +lineLength),
+                    y:screenHeight/2 +Math.sin(2*Math.PI*i/400)*(screenHeight/2 - 200 +lineLength)
                 }
-            cctx.moveTo(begin.x,begin.y)
-            let finish = {
-                x:screenWidth/2 +Math.cos(2*Math.PI*time/400)*(screenHeight/2 - 200 +lineLength),
-                y:screenHeight/2 +Math.sin(2*Math.PI*time/400)*(screenHeight/2 - 200 +lineLength)
+                ctx.lineTo(finish.x,finish.y); 
+                initialPhase ++;
+                initialPhase = initialPhase <400?initialPhase:initialPhase-400;
             }
-            ctx.lineTo(finish.x,finish.y); 
-            initialPhase ++;
-            initialPhase = initialPhase <500?initialPhase:initialPhase-500;
-            //}
             time++;
             time = time <400?time:time -400;
             cctx.strokeStyle = '#10c9b6'; 
             cctx.closePath();
             cctx.stroke();  
+            initialPhase ++;
+            initialPhase = initialPhase <400?initialPhase:initialPhase-400;
+ 
             // if(time < 0){
             //     for(let i =0;i<pixels.length;i++){
             //         pixels[i].y += Math.random()*100 -50;
