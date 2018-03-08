@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+    <canvas id="myCanvas" width="600" height="400" style="background:#000">your web browser does not support canvas</canvas>
+    </body>
+    <script type="text/javascript">
+        let screenWidth =  document.documentElement.clientWidth;
+        let screenHeight = document.documentElement.clientHeight;
+        let canvas = document.getElementById("myCanvas");
+        canvas.width = screenWidth;
+        canvas.height = screenHeight;
+        let ctx = canvas.getContext("2d");
+        let pixels =[];
+        let lineCount = 400;
+        let baseHeight = 0;
+        drawCircle();
+        drawPic();
+        let time  = 0;
+        let initialPhase = 0;
+        let circleWidth = 40;
+        setInterval(function(){
+        run();
+        }, 60);
+
+        function drawCircle(){
+            console.log(pixels);
+            let canvas = document.getElementById("myCanvas");
+            let ctx = canvas.getContext("2d");
+            //一个像素圆
+            //ctx.clearRect(0,0,screenWidth,screenHeight);
+            // let len = pixels.length,curr_pixel = null;
+            // for(let i = 0; i<len; i++){
+            //     curr_pixel = pixels[i];
+            //     ctx.fillStyle = curr_pixel.fillStyle;
+            //     ctx.fillRect(curr_pixel.x,curr_pixel.y,1,1);
+            // }
+            //画一个完整的圆
+            ctx.beginPath();
+            ctx.arc(screenWidth/2,screenHeight/2,screenHeight/2 -300,0,2*Math.PI);
+            ctx.fillStyle="#cfb53b";//填充颜色,默认是黑色
+            ctx.fill();
+            ctx.closePath();
+            ctx.stroke();
+            // 画一个空心放射圆;
+            // for(let i =0; i< lineCount;i++){
+            //     let begin ={
+            //         x:screenWidth/2 +Math.cos(2*Math.PI*i/400)*(screenHeight/2 - 200),
+            //         y:screenHeight/2 +Math.sin(2*Math.PI*i/400)*(screenHeight/2 - 200)
+            //     }
+            //     ctx.moveTo(begin.x,begin.y)
+            //     let finish = {
+            //         x:screenWidth/2 +Math.cos(2*Math.PI*i/400)*(screenHeight/2 - 150),
+            //         y:screenHeight/2 +Math.sin(2*Math.PI*i/400)*(screenHeight/2 - 150)
+            //     }
+            //     ctx.lineTo(finish.x,finish.y); 
+            // }
+            // ctx.strokeStyle = '#10c9b6'; 
+            // ctx.stroke();   
+        }
+        function run(){
+            initialPhase++;
+
+            let canvas = document.getElementById("myCanvas");
+            let cctx = canvas.getContext("2d");
+            //清除旧的痕迹
+            cctx.beginPath();
+            for(let i = 0;i<lineCount;i++){
+                let clearlineBegin ={
+                    x:screenWidth/2 +Math.cos(2*Math.PI*i/400)*(screenHeight/2 - 300 ),
+                    y:screenHeight/2 +Math.sin(2*Math.PI*i/400)*(screenHeight/2 - 300 )   
+                };
+                cctx.moveTo(clearlineBegin.x,clearlineBegin.y);
+                let clearlineFinish = {
+                    x:screenWidth/2 +Math.cos(2*Math.PI*i/400)*(screenHeight/2 - 300 +circleWidth*4),
+                    y:screenHeight/2 +Math.sin(2*Math.PI*i/400)*(screenHeight/2 - 300 +circleWidth*4)
+                }
+                ctx.lineTo(clearlineFinish.x,clearlineFinish.y); 
+            }
+            cctx.strokeStyle = '#000'; 
+            cctx.closePath();
+            cctx.stroke(); 
+            //画一个空心放射圆;
+            cctx.beginPath();
+            for(let i =0; i< lineCount;i++){
+                let lineLength = circleWidth*Math.cos(2*Math.PI*initialPhase/200) + circleWidth*Math.cos(2*Math.PI*i/100)*Math.sin(2*Math.PI*i/200) +circleWidth*2;
+                let begin ={
+                        x:screenWidth/2 +Math.cos(2*Math.PI*i/400)*(screenHeight/2 - 300),
+                        y:screenHeight/2 +Math.sin(2*Math.PI*i/400)*(screenHeight/2 - 300)
+                    }
+                cctx.moveTo(begin.x,begin.y)
+                let finish = {
+                    x:screenWidth/2 +Math.cos(2*Math.PI*i/400)*(screenHeight/2 - 300 +lineLength),
+                    y:screenHeight/2 +Math.sin(2*Math.PI*i/400)*(screenHeight/2 - 300 +lineLength)
+                }
+                ctx.lineTo(finish.x,finish.y); 
+                initialPhase ++;
+                initialPhase = initialPhase <400?initialPhase:initialPhase-400;
+            }
+            time++;
+            time = time <400?time:time -400;
+            cctx.strokeStyle = '#fff'; 
+            cctx.closePath();
+            cctx.stroke();  
+            initialPhase ++;
+            initialPhase = initialPhase <400?initialPhase:initialPhase-400;
+
+        }
+        function drawPic(){
+            
+        }
+
+    </script>
+    <style> 
+    *{
+        padding: 0;
+        margin: 0;
+    }
+    </style>
+</html>
