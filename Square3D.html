@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+    <canvas id="myCanvas" width="600" height="400" style="background:#000">your web browser does not support canvas</canvas>
+    </body>
+    <script type="text/javascript">
+        let screenWidth =  document.documentElement.clientWidth;
+        let screenHeight = document.documentElement.clientHeight;
+        let canvas = document.getElementById("myCanvas");
+        canvas.width = screenWidth;
+        canvas.height = screenHeight;
+        let ctx = canvas.getContext("2d");
+        let pixels =[];
+        let drawSquare = function(){
+            for(let i =1 ;i<12;i++){
+                //drawRow
+                let beginRow = {
+                    x:(screenWidth-screenHeight)/2 + i/22*screenHeight,
+                    y:screenHeight - i/22*screenHeight
+                }
+                let endRow = {
+                    x:screenWidth - (screenWidth-screenHeight)/2 - i/22*screenHeight,
+                    y:screenHeight - i/22*screenHeight
+                }
+                ctx.moveTo(beginRow.x,beginRow.y)
+                ctx.lineTo(endRow.x,endRow.y)
+                //drawCol
+                let endCol = {
+                    x : (screenWidth-screenHeight)/2 + (i-1)/11*screenHeight,
+                    y :  screenHeight - 1/22*screenHeight
+                }
+                ctx.moveTo(screenWidth/2,screenHeight/2)
+                ctx.lineTo(endCol.x,endCol.y)
+            }
+            ctx.strokeStyle = '#10c9b6'; 
+            ctx.stroke();
+
+        }
+        drawSquare();
+    </script>
+    <style> 
+    *{
+        padding: 0;
+        margin: 0;
+    }
+    </style>
+</html>
