@@ -17,7 +17,19 @@
         let ctx = canvas.getContext("2d");
         let pixels =[];
         let drawSquare = function(){
-            for(let i =1 ;i<12;i++){
+            for(let i =1; i <12; i++){
+
+                //drawCol
+                let endCol = {
+                    x : (screenWidth-screenHeight)/2 + (2*i-1)/22*screenHeight,
+                    y :  screenHeight - 1/22*screenHeight
+                }
+                ctx.moveTo(screenWidth/2,screenHeight/2)
+                ctx.lineTo(endCol.x,endCol.y)
+            }
+            ctx.strokeStyle = '#10c9b6'; 
+            ctx.stroke();
+            for(let j = screenHeight;j <= screenHeight/2;screenHeight /= 1.414){
                 //drawRow
                 let beginRow = {
                     x:(screenWidth-screenHeight)/2 + i/22*screenHeight,
@@ -29,16 +41,7 @@
                 }
                 ctx.moveTo(beginRow.x,beginRow.y)
                 ctx.lineTo(endRow.x,endRow.y)
-                //drawCol
-                let endCol = {
-                    x : (screenWidth-screenHeight)/2 + (2*i-1)/22*screenHeight,
-                    y :  screenHeight - 1/22*screenHeight
-                }
-                ctx.moveTo(screenWidth/2,screenHeight/2)
-                ctx.lineTo(endCol.x,endCol.y)
             }
-            ctx.strokeStyle = '#10c9b6'; 
-            ctx.stroke();
 
         }
         drawSquare();
