@@ -27,22 +27,25 @@
                 ctx.moveTo(screenWidth/2,screenHeight/2)
                 ctx.lineTo(endCol.x,endCol.y)
             }
-            ctx.strokeStyle = '#10c9b6'; 
-            ctx.stroke();
-            for(let j = screenHeight;j <= screenHeight/2;screenHeight /= 1.414){
-                //drawRow
+            let k = 1/22*screenHeight;
+
+            //drawRow
+            for(var j = 0;j  <20;j++){
+                k =  k * Math.sqrt(1/2)*1.5;
+                console.log(k);
                 let beginRow = {
-                    x:(screenWidth-screenHeight)/2 + i/22*screenHeight,
-                    y:screenHeight - i/22*screenHeight
+                    x:(screenWidth-screenHeight)/2 + k,
+                    y:screenHeight - k
                 }
                 let endRow = {
-                    x:screenWidth - (screenWidth-screenHeight)/2 - i/22*screenHeight,
-                    y:screenHeight - i/22*screenHeight
+                    x:screenWidth - (screenWidth-screenHeight)/2 - k,
+                    y:screenHeight - k
                 }
                 ctx.moveTo(beginRow.x,beginRow.y)
                 ctx.lineTo(endRow.x,endRow.y)
             }
-
+            ctx.strokeStyle = '#10c9b6'; 
+            ctx.stroke();
         }
         drawSquare();
     </script>
